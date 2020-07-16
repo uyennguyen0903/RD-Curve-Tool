@@ -10,15 +10,17 @@ main()
 {
 
     //Image' dimensions
-    long double width, height,s;
-    width = 564.0;
-    height = 1002.0;
+    long double width, height, s;
+    cout << "Enter width of image :" << endl;
+    cin >> width;
+    cout << "Enter height of image :" << endl;
+    cin >> height;
     s = width * height;
 
-    ifstream read_file("data4.txt");
+    ifstream read_file("data.txt");
     assert(read_file.is_open());
 
-    ofstream write_output("data4.dat");
+    ofstream write_output("data.dat");
     assert(write_output.is_open());
 
     for(int i = 0; i <= 100; i++)

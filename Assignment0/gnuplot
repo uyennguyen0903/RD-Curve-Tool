@@ -1,5 +1,0 @@
-plot "data6.dat" with line title "m = 6", "data4.dat" with line title "m = 4", "data0.dat" with line title "m = 0"
-
-set xlabel "Bit-rate"
-set ylabel "PSNR"
-replot

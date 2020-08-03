@@ -1,37 +1,40 @@
 // calculate bitrate (= bit/pixel)
 
-#include <iostream>
-#include <fstream>
 #include <cassert>
-#include <iomanip>      
+#include <fstream>
+#include <iomanip>
+#include <iostream>
 using namespace std;
 
-main()
-{
-
-    //Image' dimensions
-    long double width, height, s;
-    cout << "Enter width of image :" << endl;
-    cin >> width;
-    cout << "Enter height of image :" << endl;
-    cin >> height;
-    s = width * height;
-
-    ifstream read_file("data.txt");
-    assert(read_file.is_open());
-
-    ofstream write_output("data.dat");
-    assert(write_output.is_open());
-
-    for(int i = 0; i <= 100; i++)
-    {
-        long double t1, t2;
-        read_file >> t1 >> t2;
-        write_output << t1/s << " " << t2 << setprecision(9) << endl;
-    }
-
-    write_output.close();
-    read_file.close();
-    
+main(int argc, char* argv[]) {
+  if (argc == 1) {
+    std::cout << "./calc input_filename output_filename img_num img_width "
+                 "img_height\n";
     return 0;
+  }
+  std::ifstream input(argv[1]);
+  std::ofstream output(argv[2]);
+  std::string string_pic_num = argv[3];
+  std::string string_pic_width = argv[4];
+  std::string string_pic_height = argv[5];
+
+  int pic_num = 0;
+  for (auto t : string_pic_num) pic_num = pic_num * 10 + (t - '0');
+  pic_num++;
+
+  int pic_width = 0;
+  for (auto t : string_pic_width) pic_width = pic_width * 10 + (t - '0');
+
+  int pic_height = 0;
+  for (auto t : string_pic_height) pic_height = pic_height * 10 + (t - '0');
+
+  long double s = (1.0 * pic_width) * (1.0 * pic_height);
+
+  for (int i = 1; i <= 101 * pic_num; i++) {
+    long double t1, t2;
+    input >> t1 >> t2;
+    output << t1 / s << " " << t2 << setprecision(9) << endl;
+  }
+
+  return 0;
 }

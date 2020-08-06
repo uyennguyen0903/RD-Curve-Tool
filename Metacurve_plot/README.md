@@ -14,4 +14,4 @@ The resulting data containing PSNR and sizes of frames for each animations is sa
 ## Usage
 1. Create a directory named Animations containing several WebP animations.
 2. Run `./gen_metacurve.sh`
-3. Plot the resulting data with **plot_metacure.sce**
+3. Plot the resulting data with **plot_metacurve.sce**

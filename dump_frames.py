@@ -26,10 +26,8 @@ except OSError:
 current_frame = 0
 while(current_frame < int(num_frame)):
     ret, frame = capture.read()
-    if (current_frame % 50 != 0):
-        continue
     if width != -1 :
-        frame = cv2.resize(frame, dim, interpolation = cv2.INTER_CUBIC)
+        frame = cv2.resize(frame, dim, interpolation = cv2.INTER_LANCZOS4)
     name_frame = str(current_frame)
     while (len(name_frame) < 3):
         name_frame = '0' + name_frame

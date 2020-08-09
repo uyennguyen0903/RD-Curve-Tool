@@ -35,4 +35,4 @@ done
 
 END=$(date +%s)
 DIFF=$(( $END - $START ))
-echo "It took $DIFF seconds"
+echo "---------- $DIFF seconds ----------"

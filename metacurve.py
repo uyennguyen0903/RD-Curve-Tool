@@ -14,8 +14,8 @@ def img_process (img_file, pixels):
     bitrate = []
     for quality in range(0,101):
         cmd = 'cwebp -q ' + str(quality) + ' -print_psnr -short ' + img_file + ' -o ' + './out.webp'
-        completed = subprocess.run(cmd, shell=True, capture_output=True)
-        output = re.search(r"\d+ \d+.\d+", str(completed.stderr)).group(0).split(" ")
+        run_cmd = subprocess.run(cmd, shell=True, capture_output=True)
+        output = re.search(r"\d+ \d+.\d+", str(run_cmd.stderr)).group(0).split(" ")
         bitrate.append(float(output[0])/pixels)
         psnr.append(float(output[1]))
     return bitrate, psnr

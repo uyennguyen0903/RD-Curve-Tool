@@ -4,7 +4,7 @@ Display multiple metacurves for a directory containing several WebP animations.
 
 The tool dumps each WebP animation into frames using **anim_dump** API and then calls **cwebp** API in a loop to display metacurves with -q in range [0..100].
 
-The resulting data containing PSNR and sizes of frames for each animations is saved in the directory ./Animations/Data.
+The resulting data containing PSNR and sizes of frames for each animation will be saved in the directory ./Animations/Data.
 
 ## Prerequistes
 - [libwebp](https://github.com/webmproject/libwebp)

@@ -33,7 +33,7 @@ def main():
         res = pool.starmap(img_process, [(f, pixels) for f in file_names])
         pool.close()
         
-        cmd = '~/step255-2020/build/thumbnailer ' + current_dir + '/frames.txt ' + current_dir + '/anim.webp ' + current_dir + '/points.txt '
+        cmd = '~/step255-2020/build/thumbnailer ' + current_dir + '/frames.txt ' + current_dir + '/anim' + str(i)+ '.webp ' + current_dir + '/points.txt '
         run_cmd = subprocess.run(cmd, shell=True)
 
         points_file = open(current_dir + '/points.txt', "r+").readlines()
@@ -44,16 +44,16 @@ def main():
 
         ind = 0
         for bitrate, psnr in res:
-            plt.plot(bitrate, psnr)
+            plt.plot(bitrate, psnr, color='skyblue')
             num_point = int(len(points) / num_pic)
             tmp = ind
-            for i in range(1,num_point+1):
+            for k in range(1,num_point+1):
                 x, y = 100, 100
                 for j in range(0,101):
                     if abs(psnr[j]-points[tmp])<abs(y-points[tmp]):
                         x, y = bitrate[j], psnr[j]
                 tmp = tmp + num_pic
-                if (i == num_point):
+                if (k == num_point):
                     plt.plot(x, y, color='green', marker='o')
                 else:
                     plt.plot(x, y, color='red', marker='o')
@@ -62,7 +62,7 @@ def main():
         plt.xlabel('Bitrate')
         plt.ylabel('PSNR')
         plt.show()
-        plt.savefig(current_dir + '/metacurve.png')
+        plt.savefig(current_dir + '/metacurves' + str(i) + '.png')
         plt.clf()
 
     print("Done !!!")

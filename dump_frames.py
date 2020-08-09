@@ -9,10 +9,11 @@ num_frame = sys.argv[2]
 dst = sys.argv[3]
 width = -1
 height = -1
-if len(sys.argv) == 6:
+if len(sys.argv) == 7:
     width = sys.argv[4]
     height = sys.argv[5]
 dim = (int(width), int(height))
+pas = int(sys.argv[6])
 
 capture = cv2.VideoCapture(video_path)
 
@@ -24,16 +25,22 @@ except OSError:
     print ('Error: Creating directory of data')
 
 current_frame = 0
-while(current_frame < int(num_frame)):
+cnt = 0
+while(cnt < int(num_frame)):
     ret, frame = capture.read()
+    if (current_frame % pas != 0):
+        current_frame += 1
+        continue
     if width != -1 :
         frame = cv2.resize(frame, dim, interpolation = cv2.INTER_LANCZOS4)
     name_frame = str(current_frame)
     while (len(name_frame) < 3):
         name_frame = '0' + name_frame
     name = dst + '/frame' + name_frame + '.png'
+    print(name)
     cv2.imwrite(name, frame)
     current_frame += 1
+    cnt += 1
 
 capture.release()
 cv2.destroyAllWindows()

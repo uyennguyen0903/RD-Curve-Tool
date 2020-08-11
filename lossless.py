@@ -11,26 +11,24 @@ import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 
 def img_process (img_file, pixels):
-    bitrate, psnr = [], []
+    bitrate, psnr, effort = [], [], []
     tmp = img_file.replace('.png','')
-    data_file = open(tmp + '-lossy.txt', 'w+')
+    data_file = open(tmp + '-lossless.txt', 'w+')
     
     for quality in range(0,101):
-        cmd = 'cwebp -q ' + str(quality) + ' -print_psnr -short ' + img_file + ' -o ' + tmp + str(quality) + '.webp'
-        
+        if (quality >= 50 and quality % 2 == 1):
+            continue
+        cmd = 'cwebp -lossless -q ' + str(quality) + ' -print_psnr -short ' + img_file + ' -o ' + './out.webp'
         run_cmd = subprocess.run(cmd, shell=True, capture_output=True)
         output = re.search(r"\d+ \d+.\d+", str(run_cmd.stderr)).group(0).split(" ")
         
         bitrate.append(float(output[0])/pixels)
         psnr.append(float(output[1]))
-        
-        data_file.write(str(float(output[0])/pixels) + ' ' + str(float(output[1])) + '\n')
+        effort.append(quality)
+        data_file.write(str(float(output[0])/pixels) + ' ' + str(float(output[1])) + ' ' + str(quality)+'\n')
     
-        cmd_del = 'rm -rf ' + tmp + str(quality) + '.webp'
-        run_cmd_del = subprocess.run(cmd_del, shell=True)
-
     data_file.close()
-    return bitrate, psnr
+    return bitrate, psnr, effort
 
 def main():
     start_time = time.time()
@@ -54,13 +52,13 @@ def main():
         res = pool.starmap(img_process, [(f, pixels) for f in file_names])
         pool.close()
         
-        for bitrate, psnr in res:
-            plt.plot(bitrate, psnr)
-        plt.title('Lossy')
+        for bitrate, psnr, effort in res:
+            plt.plot(effort, bitrate, color = 'firebrick')
+        plt.title('Lossless')
         plt.xlabel('Bitrate')
         plt.ylabel('PSNR')
         plt.show()
-        plt.savefig(current_dir + '/results/lossy.png')
+        plt.savefig(current_dir + '/results/lossless.png')
         plt.clf()
     
     print("Done !!!")

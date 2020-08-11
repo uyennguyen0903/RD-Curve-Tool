@@ -3,6 +3,7 @@ import os
 import sys
 import glob
 import time
+import shutil
 import subprocess
 import multiprocessing
 
@@ -17,6 +18,12 @@ def main():
         current_dir = sys.argv[i]
         file_names = []
         
+        try:
+            if not os.path.exists(current_dir + '/results'):
+                os.makedirs(current_dir + '/results')
+        except OSError:
+            print ('Error: Creating directory of data')
+
         frames_file = open(current_dir + '/frames.txt', 'w+')
         timestamp = 100
         for f in glob.glob(current_dir + '/*.png'):
@@ -33,36 +40,23 @@ def main():
         res = pool.starmap(img_process, [(f, pixels) for f in file_names])
         pool.close()
         
-        cmd = '~/step255-2020/build/thumbnailer ' + current_dir + '/frames.txt ' + current_dir + '/anim' + str(i)+ '.webp ' + current_dir + '/points.txt '
+        cmd = '~/step255-2020/build/thumbnailer ' + current_dir + '/frames.txt ' + current_dir + '/results/anim' + str(i)+ '.webp ' + current_dir + '/points.txt '
         run_cmd = subprocess.run(cmd, shell=True)
 
         points_file = open(current_dir + '/points.txt', "r+").readlines()
-        points = []
         for p in points_file:
             x = p.strip()
-            points.append(float(x))
+            final_quality = int(x)
 
-        ind = 0
         for bitrate, psnr in res:
             plt.plot(bitrate, psnr, color='skyblue')
-            num_point = int(len(points) / num_pic)
-            tmp = ind
-            for k in range(1,num_point+1):
-                x, y = 100, 100
-                for j in range(0,101):
-                    if abs(psnr[j]-points[tmp])<abs(y-points[tmp]):
-                        x, y = bitrate[j], psnr[j]
-                tmp = tmp + num_pic
-                if (k == num_point):
-                    plt.plot(x, y, color='green', marker='o')
-                else:
-                    plt.plot(x, y, color='red', marker='o')
-            ind += 1           
+            plt.plot(bitrate[final_quality], psnr[final_quality], color='green', marker='o')         
 
+        plt.title('Lossy')
         plt.xlabel('Bitrate')
         plt.ylabel('PSNR')
         plt.show()
-        plt.savefig(current_dir + '/metacurves' + str(i) + '.png')
+        plt.savefig(current_dir + '/results/lossy.png')
         plt.clf()
 
     print("Done !!!")

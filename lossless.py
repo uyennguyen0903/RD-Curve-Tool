@@ -55,8 +55,8 @@ def main():
         for bitrate, psnr, effort in res:
             plt.plot(effort, bitrate, color = 'firebrick')
         plt.title('Lossless')
-        plt.xlabel('Bitrate')
-        plt.ylabel('PSNR')
+        plt.xlabel('Effort')
+        plt.ylabel('Bitrate')
         plt.show()
         plt.savefig(current_dir + '/results/lossless.png')
         plt.clf()

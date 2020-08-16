@@ -21,10 +21,15 @@ def img_process (img_file, pixels):
         run_cmd = subprocess.run(cmd, shell=True, capture_output=True)
         output = re.search(r"\d+ \d+.\d+", str(run_cmd.stderr)).group(0).split(" ")
         
-        bitrate.append(float(output[0])/pixels)
-        psnr.append(float(output[1]))
+        cmd = '~/libwebp/build/get_disto ' + tmp + str(quality) + '.webp ' + img_file
+        run_cmd = subprocess.run(cmd, shell=True, capture_output=True)
+        output = str(run_cmd).split(' ')
+        size = output[4].replace("stdout=b'",'')
         
-        data_file.write(str(float(output[0])/pixels) + ' ' + str(float(output[1])) + '\n')
+        bitrate.append(float(size)/pixels)
+        psnr.append(float(output[5]))
+        
+        data_file.write(str(float(size)/pixels) + ' ' + str(float(output[5])) + '\n')
     
         cmd_del = 'rm -rf ' + tmp + str(quality) + '.webp'
         run_cmd_del = subprocess.run(cmd_del, shell=True)

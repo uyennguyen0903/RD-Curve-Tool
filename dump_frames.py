@@ -32,7 +32,7 @@ while(cnt < int(num_frame)):
         current_frame += 1
         continue
     if width != -1 :
-        frame = cv2.resize(frame, dim, interpolation = cv2.INTER_LANCZOS4)
+        frame = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)
     name_frame = str(current_frame)
     while (len(name_frame) < 3):
         name_frame = '0' + name_frame

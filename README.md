@@ -35,7 +35,8 @@ Draw meta curves (lossy, lossless or near-lossless) for multiple directories con
 
 `python3 ./plot_curve/near-lossless.py dir_1 dir_2 ... dir_n`
 
-- plot R-D curves (lossy and near-lossless) for each frame of animation stored in a directory (*lossy.py and near-lossless.py must be doned before running this file*):
+- plot R-D curves (lossy and near-lossless) for each frame of animation stored in a directory.
+(*lossy.py and near-lossless.py must be done before running this file*).
 
 `python3 ./plot_curve/draw-mixed-curves.py anim_dir`
 

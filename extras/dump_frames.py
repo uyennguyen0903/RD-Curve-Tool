@@ -9,11 +9,10 @@ num_frame = sys.argv[2]
 dst = sys.argv[3]
 width = -1
 height = -1
-if len(sys.argv) == 7:
-    width = sys.argv[4]
-    height = sys.argv[5]
+width = sys.argv[4]
+height = sys.argv[5]
 dim = (int(width), int(height))
-pas = int(sys.argv[6])
+pas = 25
 
 capture = cv2.VideoCapture(video_path)
 

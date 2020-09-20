@@ -9,7 +9,6 @@ function anim_process(){
     done
     echo "${logfiles[$ind_pic]} $timestamp" &>> $param/frames.txt
 
-  	~/step255-2020/build/thumbnailer $param/frames.txt $param/anim.webp $param/points.txt
     python3 vdata.py $param $param/plot.png
 }
 

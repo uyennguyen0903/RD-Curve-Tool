@@ -39,18 +39,9 @@ def main():
         pool = multiprocessing.Pool(multiprocessing.cpu_count())
         res = pool.starmap(img_process, [(f, pixels) for f in file_names])
         pool.close()
-        
-        cmd = '~/step255-2020/build/thumbnailer ' + current_dir + '/frames.txt ' + current_dir + '/results/anim' + str(i)+ '.webp ' + current_dir + '/points.txt '
-        run_cmd = subprocess.run(cmd, shell=True)
-
-        points_file = open(current_dir + '/points.txt', "r+").readlines()
-        for p in points_file:
-            x = p.strip()
-            final_quality = int(x)
 
         for bitrate, psnr in res:
             plt.plot(bitrate, psnr, color='skyblue')
-            plt.plot(bitrate[final_quality], psnr[final_quality], color='green', marker='o')         
 
         plt.title('Lossy')
         plt.xlabel('Bitrate')

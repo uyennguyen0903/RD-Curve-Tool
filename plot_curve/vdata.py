@@ -1,3 +1,5 @@
+# Read PSNR-Bitrate data from text file and visualize data.
+
 import os
 import sys
 import glob

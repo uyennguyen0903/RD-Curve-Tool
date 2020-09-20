@@ -83,10 +83,9 @@ In this tool, the Levenberg-Marquardt algorithm is used to predict the curves by
 
 ![Poly model example](/examples/frame100curve_fit.png)
 
-`python3 ./extras/curve_fitting.py ./examples/anim/frame100.png log 0 50 75 88 94 97 100`
+`python3 ./extras/curve_fitting.py ./examples/anim/frame100.png log 0 50 90 92 100`
 
-![Poly model example](/examples/frame100curve_fit (2).png)
-
+![log model example](/examples/frame100curve_fit_log.png)
 ## Generate data
 
 ### Usage
